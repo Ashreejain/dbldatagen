@@ -175,7 +175,6 @@ install: buildenv dist/dist_flag.txt
 
 dev-install: dist/dev-dist_flag.txt
 	@echo "$(OK_COLOR)=> Installing databrickslabs_testdatagenerator$(NO_COLOR)"
-	@cp README.md python/
 	@pip3 install --upgrade .
 	@touch `pwd`/dist/dev-install_flag.txt
 
