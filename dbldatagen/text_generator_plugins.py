@@ -338,7 +338,7 @@ class FakerTextFactory(PyfuncTextFactory):
             else:
                 ctx.faker = fakerClass()
 
-            ctx.faker.Faker.seed(42)
+            ctx.faker.seed(42)
 
             if providers is not None:
                 for provider in providers:
