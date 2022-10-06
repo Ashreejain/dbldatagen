@@ -9,9 +9,9 @@ import dbldatagen as dg
 spark = dg.SparkSingleton.getLocalInstance("basic tests")
 
 
-class TestRepeatableDataGeneration(unittest.TestCase):
+class TestRepeatableTextDataGeneration(unittest.TestCase):
+    """ Variations of repeatable data generation tests with text generation"""
     row_count = 10000
-    column_count = 10
 
     def setUp(self):
         print("setting up")
@@ -30,8 +30,6 @@ class TestRepeatableDataGeneration(unittest.TestCase):
 
         testDataSpec = (dgSpec
                         .withIdOutput()
-                        .withColumn("r", FloatType(), expr="floor(rand(42) * 350) * (86400 + 3600)",
-                                    numColumns=cls.column_count)
                         .withColumn("code1", IntegerType(), minValue=100, maxValue=200, random=withRandom)
                         .withColumn("code2", IntegerType(), minValue=0, maxValue=1000000,
                                     random=withRandom, distribution=dist)
@@ -39,6 +37,11 @@ class TestRepeatableDataGeneration(unittest.TestCase):
                         .withColumn("code4", StringType(), values=['a', 'b', 'c'], random=withRandom)
                         .withColumn("code5", StringType(), values=['a', 'b', 'c'],
                                     random=withRandom, weights=[9, 1, 1])
+                        .withColumn("phone", template=r'(ddd)-ddd-dddd|1(ddd) ddd-dddd|ddd ddddddd',
+                                    baseColumnType="hash")
+                        .withColumn("name", text=dg.ILText(words=(1, 4)))
+                        .withColumn("name2", text=dg.ILText(words=(1, 4)), random=withRandom)
+
                         )
 
         return testDataSpec
@@ -117,6 +120,11 @@ class TestRepeatableDataGeneration(unittest.TestCase):
         df2 = ds2.build()
 
         self.checkTablesEqual(df1, df2)
+
+        df1.show()
+
+        df2.show()
+
 
     def test_basic_repeatability_random_normal2(self):
         """Test basic data repeatability"""

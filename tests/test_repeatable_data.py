@@ -39,6 +39,7 @@ class TestRepeatableDataGeneration(unittest.TestCase):
                         .withColumn("code4", StringType(), values=['a', 'b', 'c'], random=withRandom)
                         .withColumn("code5", StringType(), values=['a', 'b', 'c'],
                                     random=withRandom, weights=[9, 1, 1])
+
                         )
 
         return testDataSpec

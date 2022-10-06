@@ -43,6 +43,9 @@ the same values allowing for creation of multiple tables with referential integr
    in the section
    on repeatability, rather than simply using SQL ``now()`` , ``current_timestamp()`` etc.
 
+   In addition, text data generated using templates or `FakerText` is not repeatable from run to run.
+   It is also not generated based on the underlying base column.
+
 
 Generating random data
 ----------------------
