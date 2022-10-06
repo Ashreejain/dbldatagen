@@ -338,6 +338,8 @@ class FakerTextFactory(PyfuncTextFactory):
             else:
                 ctx.faker = fakerClass()
 
+            ctx.faker.Faker.seed(42)
+
             if providers is not None:
                 for provider in providers:
                     ctx.faker.add_provider(provider)
